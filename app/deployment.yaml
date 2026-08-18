@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: subalarm
+  namespace: boat
+
+spec:
+  replicas: 1
+
+  selector:
+    matchLabels:
+      app: subalarm
+
+  template:
+    metadata:
+      labels:
+        app: subalarm
+
+    spec:
+      imagePullSecrets:
+      - name: ghcr-secret
+
+      containers:
+      - name: subalarm
+
+        image: ghcr.io/c112233c/subalarm:latest
+
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 80
