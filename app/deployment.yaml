@@ -17,9 +17,6 @@ spec:
         app: subalarm
 
     spec:
-      imagePullSecrets:
-      - name: ghcr-secret
-
       containers:
       - name: subalarm
 
