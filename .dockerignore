@@ -3,6 +3,7 @@ dist
 .env
 .git
 .gitignore
+server
 *.local
 Dockerfile
 .dockerignore
