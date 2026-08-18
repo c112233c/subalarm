@@ -23,6 +23,7 @@ const MIME = {
   '.map': 'application/json; charset=utf-8'
 };
 
+console.log();
 const now = new Date();
 const pad = (n) => String(n).padStart(2, '0');
 const stamp = (d) =>
