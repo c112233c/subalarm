@@ -40,7 +40,12 @@ export function AuthProvider({ children }) {
 
         // No valid token/session -> Keycloak redirects straight to its login URI.
         // Valid token -> app proceeds normally.
-        const auth = await kc.init({ onLoad: 'login-required', checkLoginIframe: false });
+        // pkceMethod: false -> works on plain HTTP (insecure origin has no crypto.subtle).
+        const auth = await kc.init({
+          onLoad: 'login-required',
+          checkLoginIframe: false,
+          pkceMethod: false
+        });
         if (cancelled) return;
 
         setKeycloak(kc);
@@ -55,12 +60,19 @@ export function AuthProvider({ children }) {
       } catch (err) {
         if (cancelled) return;
         console.error('Keycloak init failed:', err);
-        setError(
-          `Cannot reach Keycloak at ${realmUrl}. ` +
-            `Check that the server is running and reachable, and that ` +
-            `VITE_KEYCLOAK_URL / VITE_KEYCLOAK_REALM are correct. ` +
-            `(detail: ${err.message})`
-        );
+        if (err?.message && err.message.includes('Web Crypto API')) {
+          setError(
+            `This browser cannot use Web Crypto API because the app is served over ` +
+              `plain HTTP. Open the app via HTTPS (or localhost) so Keycloak login works.`
+          );
+        } else {
+          setError(
+            `Cannot reach Keycloak at ${realmUrl}. ` +
+              `Check that the server is running and reachable, and that ` +
+              `VITE_KEYCLOAK_URL / VITE_KEYCLOAK_REALM are correct. ` +
+              `(detail: ${err.message})`
+          );
+        }
         setInitialized(true);
       }
     }
