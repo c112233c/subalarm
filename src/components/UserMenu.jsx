@@ -2,7 +2,7 @@ import { useAuth } from '../auth/AuthProvider';
 
 export default function UserMenu() {
   const { profile, keycloak, logout } = useAuth();
-  // console.log(profile)
+  // console.log(profiless)
 
   const name = profile?.firstName
     ? `${profile.firstName} ${profile.attributes.department || ''}`.trim()
