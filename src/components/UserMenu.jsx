@@ -5,7 +5,7 @@ export default function UserMenu() {
   // console.log(profiless)
 
   const name = profile?.firstName
-    ? `${profile.firstName} ${profile.attributes.department || ''}`.trim()
+    ? `${profile.firstName}, ${profile.attributes.department || ''}`.trim()
     : keycloak?.tokenParsed?.preferred_username || 'User';
 
   return (

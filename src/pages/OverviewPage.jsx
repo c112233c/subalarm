@@ -76,8 +76,11 @@ export default function OverviewPage() {
           <section className="region-group">
             <h2 className="region-header">[{activeRegion}]</h2>
             <div className="station-grid">
-              {visibleStations.map((station) => (
-                <SubstationCard key={station.sub_code} station={station} />
+              {visibleStations.map((station, index) => (
+                <SubstationCard
+                  key={`${station.region}-${station.sub_code}-${station.sub_name || index}`}
+                  station={station}
+                />
               ))}
             </div>
           </section>
